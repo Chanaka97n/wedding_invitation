@@ -287,16 +287,8 @@ h1 {
 .guest-overlay__text {
   display: inline-block;
   max-width: 100%;
-  padding: 0 10px 18px;
+  padding: 0 10px;
   margin: 0;
-}
-
-.guest-overlay__text::after {
-  content: "";
-  display: block;
-  width: 100%;
-  margin: 2px auto 0;
-  border-bottom: 1.5px solid rgba(121, 112, 85, 0.62);
 }
 
 .guest-overlay--wedding {
@@ -328,10 +320,6 @@ h1 {
   font-size: 3.33cqw; /* 24px at 720px card width */
   font-weight: 700;
   color: #7b6d4b;
-}
-
-.invitation-preview--export .guest-overlay__text {
-  padding: 0 10px 0;
 }
 
 .invitation-preview--export .guest-overlay--wedding {
