@@ -67,10 +67,11 @@
       .replace(/^_+|_+$/g, "");
   }
 
-  function generateSafeFilename(type, title, name) {
+  function generateSafeFilename(type, title, name, extension) {
     var typePart = safeFilenamePart(type || "invitation").toLowerCase();
     var titlePart = safeFilenamePart(title || "");
     var namePart = safeFilenamePart(name || "");
+    var ext = (extension || "pdf").replace(/^\./, "");
     var parts = [typePart];
 
     if (titlePart) {
@@ -81,7 +82,17 @@
       parts.push(namePart);
     }
 
-    return parts.join("_") + ".pdf";
+    return parts.join("_") + "." + ext;
+  }
+
+  function downloadDataUrl(dataUrl, filename) {
+    var link = document.createElement("a");
+
+    link.href = dataUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   function updatePreviewText(config) {
@@ -243,6 +254,18 @@
         config.previewRoot.dataset.filenamePrefix,
         config.titleInput.value,
         guestName,
+        "pdf",
+      ),
+    );
+
+    // Also download the exact same invitation as a PNG image.
+    downloadDataUrl(
+      imageData,
+      generateSafeFilename(
+        config.previewRoot.dataset.filenamePrefix,
+        config.titleInput.value,
+        guestName,
+        "png",
       ),
     );
   }
@@ -288,6 +311,7 @@
 
   window.formatGuestName = formatGuestName;
   window.generateSafeFilename = generateSafeFilename;
+  window.downloadDataUrl = downloadDataUrl;
   window.updateInvitationPreview = updatePreviewText;
   window.downloadInvitationPDF = downloadPDF;
 
